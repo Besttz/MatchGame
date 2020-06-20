@@ -29,17 +29,17 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CardView" id="Kqy-eY-Duf">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CardView" id="Kqy-eY-Duf" customClass="CardCollectionViewCell" customModule="Match_Game" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="158" height="224"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rHe-sG-8GG">
                                             <rect key="frame" x="0.0" y="0.0" width="158" height="224"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card1" translatesAutoresizingMaskIntoConstraints="NO" id="4Lb-SL-eq9">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card1" translatesAutoresizingMaskIntoConstraints="NO" id="4Lb-SL-eq9" userLabel="front">
                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="224"/>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="uVq-5k-A51">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="uVq-5k-A51" userLabel="back">
                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="224"/>
                                                 </imageView>
                                             </subviews>
@@ -55,23 +55,30 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="158" height="224"/>
+                                        <connections>
+                                            <outlet property="back" destination="uVq-5k-A51" id="pJ1-5v-1Av"/>
+                                            <outlet property="front" destination="4Lb-SL-eq9" id="39S-Xj-R9o"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="m4g-UL-Kip" secondAttribute="bottom" id="8va-Yb-2Ll"/>
                             <constraint firstAttribute="bottom" secondItem="TCv-uj-g94" secondAttribute="bottom" id="B4u-IG-py1"/>
+                            <constraint firstItem="m4g-UL-Kip" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="IKZ-hc-huD"/>
                             <constraint firstItem="TCv-uj-g94" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Ikl-dt-TxQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m4g-UL-Kip" secondAttribute="trailing" id="Lmj-qQ-GJA"/>
+                            <constraint firstItem="m4g-UL-Kip" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ORk-Br-clH"/>
+                            <constraint firstItem="m4g-UL-Kip" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="QRl-Uq-BgR"/>
                             <constraint firstItem="TCv-uj-g94" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="V1e-1z-00g"/>
-                            <constraint firstItem="m4g-UL-Kip" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="g0F-Fq-ir9"/>
+                            <constraint firstItem="m4g-UL-Kip" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="a2v-Kd-71y"/>
                             <constraint firstAttribute="trailing" secondItem="TCv-uj-g94" secondAttribute="trailing" id="na1-Fb-r3m"/>
-                            <constraint firstItem="m4g-UL-Kip" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="pHu-pK-zaQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="collection" destination="m4g-UL-Kip" id="axm-fT-tCY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

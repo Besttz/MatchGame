@@ -8,13 +8,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
+    
+    
+    
 
+    let model = CardModel()
+    var cards = [Card]()
+    
+    @IBOutlet weak var collection: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        cards = model.getCards()
+        collection.dataSource = self
+        collection.delegate = self
     }
 
+    // MARK: - View
 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cards.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        //  GET
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath)
+        // CONFIGURE
+        
+        // RETURN
+        return cell
+    }
 }
 
