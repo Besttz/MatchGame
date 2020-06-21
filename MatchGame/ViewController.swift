@@ -39,10 +39,18 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardCollectionViewCell
         
         // CONFIGURE
-        cell.configureCell(cards[indexPath.row])
+//        cell.configureCell(cards[indexPath.row])
         
         // RETURN
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let thisCell = cell as? CardCollectionViewCell
+        // CONFIGURE as the state of this card
+        thisCell?.configureCell(cards[indexPath.row])
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
