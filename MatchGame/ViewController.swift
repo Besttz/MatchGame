@@ -26,7 +26,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         collection.delegate = self
     }
 
-    // MARK: - View
+    // MARK: - View Collection Controls
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count
@@ -35,11 +35,20 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         //  GET
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardCollectionViewCell
+        
         // CONFIGURE
+        cell.configureCell(cards[indexPath.row])
         
         // RETURN
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // Get the tapped cell
+        let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell
+        cell?.flipUp()
     }
 }
 
