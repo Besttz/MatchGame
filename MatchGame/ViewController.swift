@@ -12,9 +12,10 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     
     
     
-
+    
     let model = CardModel()
     var cards = [Card]()
+    var flipingCell:CardCollectionViewCell?
     
     @IBOutlet weak var collection: UICollectionView!
     
@@ -25,9 +26,9 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         collection.dataSource = self
         collection.delegate = self
     }
-
+    
     // MARK: - View Collection Controls
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count
     }
@@ -48,7 +49,36 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         
         // Get the tapped cell
         let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell
-        cell?.flipUp()
+        
+        // Check if this card if tapped or matched
+        if !(cell?.card!.isFlipped)! && !(cell?.card!.isMatched)! {
+            
+            
+            cell?.flipUp()
+            
+            // Check if there is card being fliped
+            if let old = flipingCell {
+                
+                // Check if this two care match
+                if cell?.card?.image == old.card?.image {
+                    
+                    // Mark them matched and vanish
+                    cell?.card?.isMatched = true
+                    old.card?.isMatched = true
+                    //
+                    cell?.remove()
+                    old.remove()
+                } else {
+                    cell?.flipBack()
+                    old.flipBack()
+                }
+                
+                //Set current record cell as nil
+                flipingCell = nil
+            } else {
+                flipingCell = cell
+            }
+        }
     }
 }
 
