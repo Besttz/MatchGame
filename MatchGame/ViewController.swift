@@ -21,6 +21,8 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     var timer:Timer?
     var time = 60*1000
     
+    var sound:SoundManager = SoundManager()
+    
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var timeLable: UILabel!
     
@@ -34,6 +36,10 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         // Initialize the timer
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        sound.playSound(.shuffle)
     }
     // MARK: - Timer
     
@@ -77,6 +83,11 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        // Check if the timer is  stop
+        if time == 0 {
+            return
+        }
+        
         // Get the tapped cell
         let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell
         
@@ -102,6 +113,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
                     if oldCell.card === old {
                         oldCell.remove()
                     }
+                    sound.playSound(.match)
                     
                 } else {
                     cell?.flipBack()
@@ -110,12 +122,14 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
                     } else {
                         old.isFlipped = false
                     }
+                    sound.playSound(.wrong)
                 }
                 
                 //Set current record cell as nil
                 flipingCard = nil
                 flipingCell = nil
             } else {
+                sound.playSound(.flip)
                 flipingCard = cell?.card
                 flipingCell = cell
             }
@@ -135,6 +149,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         if win {
             showAlert(title: "Congratulations!", message: "Win!")
             timer?.invalidate()
+            sound.playSound(.match)
         } else if time == 0 {
             showAlert(title: "Sorry!", message: "Time is Up!")
         }
