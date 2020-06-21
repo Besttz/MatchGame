@@ -27,6 +27,7 @@ class CardModel {
             if cardNum.contains(num) {
                 continue
             }
+            
             //Add this card
             cardNum.append(num)
             cards.append(Card("card\(num)"))
@@ -37,7 +38,6 @@ class CardModel {
         cards.shuffle()
         
         // Return this array
-        
         return cards
     }
 }

@@ -16,6 +16,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     let model = CardModel()
     var cards = [Card]()
     var flipingCell:CardCollectionViewCell?
+    var flipingCard:Card?
     
     @IBOutlet weak var collection: UICollectionView!
     
@@ -39,7 +40,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardCollectionViewCell
         
         // CONFIGURE
-//        cell.configureCell(cards[indexPath.row])
+        //        cell.configureCell(cards[indexPath.row])
         
         // RETURN
         return cell
@@ -50,7 +51,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         let thisCell = cell as? CardCollectionViewCell
         // CONFIGURE as the state of this card
         thisCell?.configureCell(cards[indexPath.row])
-       
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -65,25 +66,36 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             cell?.flipUp()
             
             // Check if there is card being fliped
-            if let old = flipingCell {
+            if let old = flipingCard, let oldCell = flipingCell {
                 
                 // Check if this two care match
-                if cell?.card?.image == old.card?.image {
+                if cell?.card?.image == old.image {
                     
                     // Mark them matched and vanish
                     cell?.card?.isMatched = true
-                    old.card?.isMatched = true
+                    old.isMatched = true
                     //
                     cell?.remove()
-                    old.remove()
+                    
+                    // Check if the card is still in view
+                    if oldCell.card === old {
+                        oldCell.remove()
+                    }
+                    
                 } else {
                     cell?.flipBack()
-                    old.flipBack()
+                    if oldCell.card === old {
+                        oldCell.flipBack()
+                    } else {
+                        old.isFlipped = false
+                    }
                 }
                 
                 //Set current record cell as nil
+                flipingCard = nil
                 flipingCell = nil
             } else {
+                flipingCard = cell?.card
                 flipingCell = cell
             }
         }
