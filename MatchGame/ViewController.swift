@@ -18,7 +18,11 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     var flipingCell:CardCollectionViewCell?
     var flipingCard:Card?
     
+    var timer:Timer?
+    var time = 60*1000
+    
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var timeLable: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +30,25 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         cards = model.getCards()
         collection.dataSource = self
         collection.delegate = self
+        
+        // Initialize the timer
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer!, forMode: .common)
     }
+    // MARK: - Timer
     
+    @objc func timerFired() {
+        
+        time -= 1
+        let sec:Double = Double(time)/1000.0
+        timeLable.text = String(format: "Time: %.2f", sec)
+        
+        if time == 0 {
+            timeLable.textColor = UIColor.red
+            timer?.invalidate()
+            checkWin()
+        }
+    }
     // MARK: - View Collection Controls
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -99,6 +120,33 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
                 flipingCell = cell
             }
         }
+        checkWin()
+    }
+    
+    func checkWin() {
+        
+        var win = true
+        for card in cards {
+            if !card.isMatched {
+                win = false
+                break
+            }
+        }
+        if win {
+            showAlert(title: "Congratulations!", message: "Win!")
+            timer?.invalidate()
+        } else if time == 0 {
+            showAlert(title: "Sorry!", message: "Time is Up!")
+        }
+    }
+    
+    func showAlert(title:String, message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let alertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        
+        present(alert,animated: true)
     }
 }
 
