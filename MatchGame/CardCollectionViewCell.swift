@@ -24,22 +24,24 @@ class CardCollectionViewCell: UICollectionViewCell {
         // Set the cell images
         front.image = UIImage(named: card.image)
         back.image = UIImage(named:"back")
-        front.alpha = 1
-        back.alpha = 1
+        
         
         // Check if this card is macthed
-        if !card.isMatched {
+        if card.isMatched {
+            
+            front.alpha = 0
+            back.alpha = 0
+        } else {
+            
+            front.alpha = 1
+            back.alpha = 1
             
             // Check if this card is fliped
             if card.isFlipped {
                 UIView.transition(from: back, to: front, duration: 0.0, options: [.showHideTransitionViews,.transitionFlipFromLeft], completion: nil)
             } else {
-                flipBack(0.0)
+                UIView.transition(from: front, to: back, duration: 0.0, options: [.showHideTransitionViews,.transitionFlipFromLeft], completion: nil)
             }
-            
-        } else {
-            front.alpha = 0
-            back.alpha = 0
         }
         
     }
